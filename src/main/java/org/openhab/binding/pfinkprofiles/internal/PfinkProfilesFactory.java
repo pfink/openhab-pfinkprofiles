@@ -40,19 +40,29 @@ public class PfinkProfilesFactory implements ProfileFactory, ProfileTypeProvider
             .withSupportedItemTypes(CoreItemFactory.SWITCH, CoreItemFactory.DIMMER, CoreItemFactory.COLOR)
             .withSupportedChannelTypeUIDs(DefaultSystemChannelTypeProvider.SYSTEM_RAWROCKER.getUID()).build();
 
+    private static final TriggerProfileType BUTTON_TOGGLE_SWITCH_TYPE = ProfileTypeBuilder
+            .newTrigger(UID_BUTTON_TOGGLE_SWITCH, "Button Toggle Switch")
+            .withSupportedItemTypes(CoreItemFactory.SWITCH, CoreItemFactory.DIMMER, CoreItemFactory.COLOR)
+            .withSupportedChannelTypeUIDs(DefaultSystemChannelTypeProvider.SYSTEM_BUTTON.getUID()).build();
+
     @Override
     public @Nullable Profile createProfile(ProfileTypeUID profileTypeUID, ProfileCallback callback,
             ProfileContext profileContext) {
-        return new RawRockerOnOffProfile(callback);
+        if (profileTypeUID.equals(UID_ROCKER_TO_ON_OFF)) {
+            return new RawRockerOnOffProfile(callback);
+        } else if (profileTypeUID.equals(UID_BUTTON_TOGGLE_SWITCH)) {
+            return new ButtonToggleSwitchProfile(callback, profileContext);
+        }
+        return null;
     }
 
     @Override
     public Collection<ProfileTypeUID> getSupportedProfileTypeUIDs() {
-        return Set.of(UID_ROCKER_TO_ON_OFF);
+        return Set.of(UID_ROCKER_TO_ON_OFF, UID_BUTTON_TOGGLE_SWITCH);
     }
 
     @Override
     public Collection<ProfileType> getProfileTypes(@Nullable Locale locale) {
-        return Set.of(RAWROCKER_ON_OFF_TYPE);
+        return Set.of(RAWROCKER_ON_OFF_TYPE, BUTTON_TOGGLE_SWITCH_TYPE);
     }
 }

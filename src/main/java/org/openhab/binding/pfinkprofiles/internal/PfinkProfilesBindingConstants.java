@@ -29,4 +29,7 @@ public class PfinkProfilesBindingConstants {
     // List of all Profile Type UIDs
     public static final ProfileTypeUID UID_ROCKER_TO_ON_OFF = new ProfileTypeUID(
             PfinkProfilesBindingConstants.BINDING_ID, "rocker-to-on-off");
+
+    public static final ProfileTypeUID UID_BUTTON_TOGGLE_SWITCH = new ProfileTypeUID(
+            PfinkProfilesBindingConstants.BINDING_ID, "button-toggle-switch");
 }
